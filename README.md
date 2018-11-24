@@ -28,8 +28,8 @@ iReporter enables any/every citizen to bring any form of corruption to the notic
                 <div class="block-right">
                     <h3>To use the site</h3>
                     <ul>
-                <li><p>User Sign-In: <br/>astone 12345</p></li>
-                <li><p>Admin Sign-In: <br/>admin admin12345</p></li>
+                      <li><p>User Sign-In: <br/><strong>Username</strong>astone<br/><strong>Password:</strong>12345</p></li>
+                <li><p>Admin Sign-In: <br/><strong>Username:</strong>admin<br/><strong>Password:</strong>admin12345</p></li>
                 </ul>
             </div>
            
