@@ -4,9 +4,13 @@ iReporter enables any/every citizen to bring any form of corruption to the notic
 <div class="container">
                         <a href="index.html"><h1>I-REPORTER</h1></a>
                     <ul>
-                        <li><a href="">Create Account</a></li>
-                        <li><a href="">Admin Sign-In</a></li>
-                        <li><a href="">User Sign-In</a></li>
+                        <li>Create Account</li>
+                        <li>Admin Sign-In</li>
+                        <li>User Sign-In</li>
+                      <li>Create record</li>
+                      <li>Delete Record</li>
+                      <li>View Record Status</li>
+                      <li>Admin Change Status</li>
                     </ul>
                 </div>
             </nav>
