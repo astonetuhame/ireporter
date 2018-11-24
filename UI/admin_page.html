@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+</head>
+<body>
+        <nav class="navbar">
+                <div class="container">
+                        <h1>I-REPORTER</h1>
+                    <ul>
+                        <li><a href="admin_page.html">Users Records</a></li>
+                        <li><a href="index.html">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+        <h1 class="heading">Admin Page</h1>
+        <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="table_head">ID</th>
+                            <th class="table_head">Created By</th>
+                            <th class="table_head">Created On</th>
+                            <th class="table_head">View Record</th>
+                            <th class="table_head">Current Status</th>
+                            <th class="table_head">Change Status</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                        <tr class="table_head">
+                            <th>1</th>
+                            <th>Astone</th>
+                            <th>23/11/2018</th>
+                            <th><a href="admin_single_record.html" >View Record</a></th>
+                            <th>Pending</th>
+                            <th><form class="my-form" onsubmit="changeStatus()">
+                                <div class="form-group">
+                                <select>
+                                    <option>Under Investigation</option>
+                                    <option>Rejected</option>
+                                    <option>Resolved</option>
+                                </select></div>
+                                <input class="button" type="submit" value="Submit">
+                            </form></th>
+                        
+                        </tr>
+                        <tr class="table_head">
+                                <th>2</th>
+                            <th>Kelvin</th>
+                            <th>27/11/2018</th>
+                            <th><a href="" >View Record</a></th>
+                            <th>Rejected</th>
+                            <th><form class="my-form" onsubmit="changeStatus()">
+                                <div class="form-group">
+                                <select>
+                                    <option>Under Investigation</option>
+                                    <option>Rejected</option>
+                                    <option>Resolved</option>
+                                </select></div>
+                                <input class="button" type="submit" value="Submit">
+                            </form></th>
+                        </tr>
+                        <tr class="table_head">
+                                <th>3</th>
+                            <th>Mark</th>
+                            <th>30/11/2018</th>
+                            <th><a href="" >View Record</a></th>
+                            <th>Resolved</th>
+                            <th><form class="my-form" onsubmit="changeStatus()">
+                                <div class="form-group">
+                                <select>
+                                    <option>Under Investigation</option>
+                                    <option>Rejected</option>
+                                    <option>Resolved</option>
+                                </select></div>
+                                <input class="button" type="submit" value="Submit">
+                            </form></th>
+                        </tr>
+                </tbody>
+                </table>
+         
+        </div>
+        </div>
+        <script src="js/main.js"></script>
+    
+</body>
+</html>
