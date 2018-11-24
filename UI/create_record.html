@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Create Record</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+    <script src="main.js"></script>
+</head>
+<body>
+        <nav class="navbar">
+                <div class="container">
+                        <h1>I-REPORTER</h1>
+                    <ul>
+                        <li><a href="create_record.html">Create Record</a></li>
+                        <li><a href="all_records.html">View Records</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="index.html">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>  
+
+    
+    <div class="container">
+            <h1 class="heading">Create Record</h1>
+    <form class="my-form" onsubmit="confirmRecord()">
+            <div class="form-group">
+                    <label>Title: </label>
+                    <input type="text" required>
+            </div>
+            <div class="form-group">
+                    <label>Description: </label>
+                    <textarea required></textarea>
+            </div>
+            <div class="form-group">
+                    <label>Type: </label>
+                    <select>
+                            <option value="Red-Flag">Red-Flag</option>
+                            <option value="Intervention">Intervention</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                    <label>Geolocation: </label>
+                    <input type="text" placeholder="Latitude" required/>
+                    <input type="text" placeholder="Longitude" required/>
+            </div>
+            <div class="form-group">
+                    <label>Add Photo: </label>
+                    <input type="file" name="pic" />
+            </div>
+            <input class="button" type="submit" value="Submit Record">
+    </form>
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>
