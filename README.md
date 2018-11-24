@@ -1,7 +1,6 @@
 # iReporter
 iReporter enables any/every citizen to bring any form of corruption to the notice of appropriate authorities and the general public.
 
-
 <div class="container">
                         <a href="index.html"><h1>I-REPORTER</h1></a>
                     <ul>
@@ -10,7 +9,7 @@ iReporter enables any/every citizen to bring any form of corruption to the notic
                         <li><a href="">User Sign-In</a></li>
                     </ul>
                 </div>
-            </nav><br/><br/>
+            </nav>
     <div class="container" >
   <div class="block-right">
                     <h3>Problem</h3>
@@ -29,8 +28,8 @@ iReporter enables any/every citizen to bring any form of corruption to the notic
                 <div class="block-right">
                     <h3>To use the site</h3>
                     <ul>
-                <li><p>User Sign-In: astone 12345</p></li>
-                <li><p>Admin Sign-In: admin admin12345</p></li>
+                <li><p>User Sign-In: <br/>astone 12345</p></li>
+                <li><p>Admin Sign-In: <br/>admin admin12345</p></li>
                 </ul>
             </div>
            
