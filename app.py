@@ -55,6 +55,5 @@ def create_user():
     return jsonify({'user': user}), 201
 
 
-
-
-APP.run(debug=True)
+if __name__ == '__main__':
+    APP.run(debug=True)
