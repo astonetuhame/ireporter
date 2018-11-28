@@ -7,6 +7,6 @@ install:
 - pip3 install -r requirements.txt
 # specify what command to run tests
 script:
-- pytest 
+- pytest --cov .
 after_success:
 - coveralls
