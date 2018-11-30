@@ -71,5 +71,9 @@ def create_red_flag_record():
     INCIDENT.append(incident)
     return jsonify({'status': 201, "data":[{"id":incident['id'], "message": "Created red-flag record"}]}), 201
 
+@APP.route('/api/v1/red-flags', methods=['GET'])
+def get_red_flags():
+    return jsonify({'status': 200, 'data': INCIDENT}), 200
+
 if __name__ == "__main__":
     APP.run(debug=True)
