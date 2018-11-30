@@ -33,8 +33,8 @@ INCIDENT = [
         "comment":"Government stole nssf"
         }]
 
-def _get_red_flag(id):
-    return [incident for incident in INCIDENT if incident['id'] == id]
+def _get_red_flag(_id):
+    return [incident for incident in INCIDENT if incident['id'] == _id]
 
 @APP.route('/api/v1/red-flags', methods=['POST'])
 def create_red_flag_record():
@@ -80,27 +80,27 @@ def get_red_flags():
     """Function to get all red-flags"""
     return jsonify({'status': 200, 'data': INCIDENT}), 200
 
-@APP.route('/api/v1/red-flags/<int:id>', methods=['GET'])
-def get_red_flag(id):
+@APP.route('/api/v1/red-flags/<int:_id>', methods=['GET'])
+def get_red_flag(_id):
     """Function to get specific red-flag"""
-    red_flag = _get_red_flag(id)
+    red_flag = _get_red_flag(_id)
     if not red_flag:
         return jsonify({'status': 404, 'error': "Red-flag record not found"}), 404
     return jsonify({'status': 200, "data": red_flag})
 
-@APP.route('/api/v1/red-flags/<int:id>', methods=['DELETE'])
-def delete_red_flag(id):
+@APP.route('/api/v1/red-flags/<int:_id>', methods=['DELETE'])
+def delete_red_flag(_id):
     """Function to delete a red-flag"""
-    incident = _get_red_flag(id)
+    incident = _get_red_flag(_id)
     if len(incident) == 0:
         return jsonify({'status': 404, 'error': "Red-flag record not found"}), 404
     INCIDENT.remove(incident[0])
     return jsonify({'status': 200, "data":[{"id": incident[0]['id'], "message": "red-flag record has been deleted"}]}), 200
 
-@APP.route('/api/v1/red-flags/<int:id>/location', methods=['PATCH'])
-def update_red_flag_location(id):
+@APP.route('/api/v1/red-flags/<int:_id>/location', methods=['PATCH'])
+def update_red_flag_location(_id):
     """Function to edit location of a red-flag"""
-    incident = _get_red_flag(id)
+    incident = _get_red_flag(_id)
     if len(incident) == 0:
         return jsonify({'status': 404, 'error': "Red-flag record not found"}), 404
     location = request.json.get('location', incident[0]['location'])
@@ -108,6 +108,18 @@ def update_red_flag_location(id):
         return jsonify({'status': 400, 'error': "Please use character strings"}), 400
     incident[0]['location'] = location
     return jsonify({"data":[{"id": incident[0]['id'], "message": "Updated red-flag record’s location"}], 'status': 200}), 200
+
+@APP.route('/api/v1/red-flags/<int:_id>/comment', methods=['PATCH'])
+def update_red_flag_comment(_id):
+    """Function to edit comment of a red-flag"""
+    incident = _get_red_flag(_id)
+    if len(incident) == 0:
+        return jsonify({'status': 404, 'error': "Red-flag record not found"}), 404
+    comment = request.json.get('comment', incident[0]['comment'])
+    if not isinstance(comment, str):
+        return jsonify({'status': 400, 'error': "Please use character strings"}), 400
+    incident[0]['comment'] = comment
+    return jsonify({"data":[{"id": incident[0]['id'], "message": "Updated red-flag record’s comment"}], 'status': 200}), 200
 
 if __name__ == "__main__":
     APP.run(debug=True)
