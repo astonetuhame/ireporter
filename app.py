@@ -97,5 +97,17 @@ def delete_red_flag(id):
     INCIDENT.remove(incident[0])
     return jsonify({'status': 200, "data":[{"id": incident[0]['id'], "message": "red-flag record has been deleted"}]}), 200
 
+@APP.route('/api/v1/red-flags/<int:id>/location', methods=['PATCH'])
+def update_red_flag_location(id):
+    """Function to edit location of a red-flag"""
+    incident = _get_red_flag(id)
+    if len(incident) == 0:
+        return jsonify({'status': 404, 'error': "Red-flag record not found"}), 404
+    location = request.json.get('location', incident[0]['location'])
+    if not isinstance(location, str):
+        return jsonify({'status': 400, 'error': "Please use character strings"}), 400
+    incident[0]['location'] = location
+    return jsonify({"data":[{"id": incident[0]['id'], "message": "Updated red-flag record’s location"}], 'status': 200}), 200
+
 if __name__ == "__main__":
     APP.run(debug=True)
