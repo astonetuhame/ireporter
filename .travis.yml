@@ -1,0 +1,17 @@
+language: python
+python:
+- "3.6"
+sudo: false
+cache: pip3
+install:
+- pip3 install -r requirements.txt
+- pip3 install coverage
+- pip3 install coveralls
+# specify what command to run tests
+script:
+- pytest --cov .
+- coverage report
+- coverage xml
+- coveralls
+after_success:
+- coveralls
