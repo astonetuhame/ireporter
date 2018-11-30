@@ -32,6 +32,10 @@ INCIDENT = [
         "Videos": ["a.mp4", "b.mp4"],
         "comment":"Government stole nssf"
         }]
+
+def _get_red_flag(id):
+    return [incident for incident in INCIDENT if incident['id'] == id]
+
 @APP.route('/api/v1/red-flags', methods=['POST'])
 def create_red_flag_record():
     """Function to create red-flag record"""
@@ -73,7 +77,16 @@ def create_red_flag_record():
 
 @APP.route('/api/v1/red-flags', methods=['GET'])
 def get_red_flags():
+    """Function to get all red-flags"""
     return jsonify({'status': 200, 'data': INCIDENT}), 200
+
+@APP.route('/api/v1/red-flags/<int:id>', methods=['GET'])
+def get_red_flag(id):
+    """Function to get specific red-flag"""
+    red_flag = _get_red_flag(id)
+    if not red_flag:
+        return jsonify({'status': 404, 'error': "Red-flag record not found"}), 404
+    return jsonify({'status': 200, "data": red_flag})
 
 if __name__ == "__main__":
     APP.run(debug=True)
