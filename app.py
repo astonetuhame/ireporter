@@ -2,58 +2,74 @@
 app root of the api endpoints
 """
 
-from datetime import datetime
 import re
+from datetime import datetime
 from flask import Flask, jsonify, request
-
 
 APP = Flask(__name__)
 
-# fname = ''
-# lname = ''
-# users = [{"fname":fname, "lname":lname }]
-USERS = [{
-    "id": 0,
-    "firstName" : "Astone",
-    "lastName" : "Tuhame",
-    "otherNames" : "Junior",
-    "email" : "astonetuhame@gmail.com",
-    "phoneNumber" : "0779219779",
-    "username" : "Taent",
-    "password": "12345",
-    "registered":"24/11/2018",
-    "isAdmin": False
-}]
+TYPEOFRECORD = ['red-flag', 'intervention']
+INCIDENT = [
+    {
+        "id": 0,
+        "createdOn" : "24/11/2018",
+        "createdBy" : 1,
+        "type" : "red-flag",
+        "location" : "30.789 0.178",
+        "status" : "draft",
+        "Images" : ["c.jpg", "d.jpg"],
+        "Videos": ["d.mp4", "e.mp4"],
+        "comment":"Government stole money"
+    },
+    {
+        "id": 1,
+        "createdOn" : "30/11/2018",
+        "createdBy" : 4,
+        "type" : "intervention",
+        "location" : "30.789 0.178",
+        "status" : "draft",
+        "Images" : ["a.jpg", "b.jpg"],
+        "Videos": ["a.mp4", "b.mp4"],
+        "comment":"Government stole nssf"
+        }]
+@APP.route('/api/v1/red-flags', methods=['POST'])
+def create_red_flag_record():
+    """Function to create red-flag record"""
+    incident_id = INCIDENT[-1].get("id") + 1
+    created_by = request.json.get('createdBy')
+    location = request.json.get('location')
+    type_of_incident = request.json.get('type')
+    images = request.json.get('Images')
+    videos = request.json.get('Videos')
+    comment = request.json.get('comment')
 
-def _record_exists(email):
-    return [user for user in USERS if user["email"] == email]
-
-@APP.route('/api/v1/users', methods=['POST'])
-def create_user():
-    """Function to create user"""
-    if not request.json or 'firstName' not in request.json or 'lastName' not in request.json  or 'otherNames' not in request.json or 'email' not in request.json or 'phoneNumber' not in request.json or 'username' not in request.json  or 'password' not in request.json:
+    if not (isinstance(images, list) or isinstance(videos, list)):
+        return jsonify({'status': 400, 'error':'Image or Video should be a list'}), 400
+    for i in images:
+        if not isinstance(i, str):
+            return jsonify({'status': 400, 'error':'Character strings needed for Images sequence'}), 400
+        if len(i) == 0:
+            return jsonify({'status': 400, 'error':'Image cannot be empty'}), 400
+    for i in videos:
+        if not isinstance(i, str):
+            return jsonify({'status': 400, 'error':'Character strings needed for Videos sequence'}), 400
+        if len(i) == 0:
+            return jsonify({'status': 400, 'error':'Video cannot be empty'}), 400
+    if not request.json or 'location' not in request.json or 'Images' not in request.json  or 'Videos' not in request.json or 'comment' not in request.json or 'createdBy' not in request.json:
         return jsonify({'error': 'BAD_REQUEST'}), 400
-    user_id = USERS[-1].get("id") + 1
-    email = request.json.get('email')
-    fname = request.json.get('firstName')
-    lname = request.json.get('lastName')
-    other = request.json.get('otherNames')
-    username = request.json.get('username')
-    password = request.json.get('password')
-    phone = request.json.get('phoneNumber')
-
-    if _record_exists(email):
-        return jsonify({'status': 400, 'error':'Email has already been taken'}), 400
-    if (type(fname) or type(lname) or type(other) or type(phone) or type(request.json.get(username))) is not str:
+    if not (isinstance(comment, str) or isinstance(type_of_incident, str) or isinstance(location, str)):
         return jsonify({'status': 400, 'error':'Please use character strings'}), 400
-    # if not request.json['firstName'] or request.json['lastName'] or request.json['email'] or request.json['phoneNumber'] or request.json['username'] or request.json['password']:
-    #     return jsonify({'status': 400,'error':'Please fill in the fields'}), 400
-    if not re.match(r"[^@\s]+@[^@\s]+\.[a-zA-Z0-9]+$", email):
-        return jsonify({'status': 400, 'error':'Invalid Email'}), 400
-    user = {"id": user_id, "firstName": fname, "lastName": lname, "otherNames": other, "email": email, "phoneNumber": phone, "username": username, "password": password, "registered": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "isAdmin":False}
-    USERS.append(user)
-    return jsonify({'user': user}), 201
+    if re.search(r"\s", location) or re.search(r"\s", type_of_incident):
+        return jsonify({'status': 400, 'error':'No whitespaces allowed'}), 400
+    if type_of_incident.lower() not in TYPEOFRECORD:
+        return jsonify({'status': 400, 'error':'Input red-flag or intervention'}), 400
+    if not location or not comment:
+        return jsonify({'status': 400, 'error':'Field should atleast contain a character'}), 400
+    if not isinstance(created_by, int):
+        return jsonify({'status': 400, 'error':'Please use integer values'}), 400
+    incident = {"id": incident_id, "createdOn": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "createdBy": created_by, "type": type_of_incident, "status": "draft", "Images": images, "Videos": videos, "comment": comment, "location": location}
+    INCIDENT.append(incident)
+    return jsonify({'status': 201, "data":[{"id":incident['id'], "message": "Created red-flag record"}]}), 201
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     APP.run(debug=True)
