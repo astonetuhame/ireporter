@@ -105,23 +105,23 @@ def update_red_flag_location(_id):
     edit_location = _get_red_flag(_id)
     if len(edit_location) == 0:
         return jsonify({'status': 404, 'error': "Red-flag record not found"}), 404
-    location = request.json.get('location', incident[0]['location'])
+    location = request.json.get('location', edit_location[0]['location'])
     if not isinstance(location, str):
         return jsonify({'status': 400, 'error': "Please use character strings"}), 400
-    incident[0]['location'] = location
-    return jsonify({"data":[{"id": incident[0]['id'], "message": "Updated red-flag record’s location"}], 'status': 200}), 200
+    edit_location[0]['location'] = location
+    return jsonify({"data":[{"id": edit_location[0]['id'], "message": "Updated red-flag record’s location"}], 'status': 200}), 200
 
 @APP.route('/api/v1/red-flags/<int:_id>/comment', methods=['PATCH'])
 def update_red_flag_comment(_id):
     """Function to edit comment of a red-flag"""
-    edit_record = _get_red_flag(_id)
-    if len(edit_record) == 0:
+    edit_comment = _get_red_flag(_id)
+    if len(edit_comment) == 0:
         return jsonify({'status': 404, 'error': "Red-flag record not found"}), 404
-    comment = request.json.get('comment', incident[0]['comment'])
+    comment = request.json.get('comment', edit_comment[0]['comment'])
     if not isinstance(comment, str):
         return jsonify({'status': 400, 'error': "Please use character strings"}), 400
-    incident[0]['comment'] = comment
-    return jsonify({"data":[{"id": incident[0]['id'], "message": "Updated red-flag record’s comment"}], 'status': 200}), 200
+    edit_comment[0]['comment'] = comment
+    return jsonify({"data":[{"id": edit_comment[0]['id'], "message": "Updated red-flag record’s comment"}], 'status': 200}), 200
 
 if __name__ == "__main__":
     APP.run(debug=True)
