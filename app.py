@@ -60,20 +60,22 @@ def create_red_flag_record():
         if len(i) == 0:
             return jsonify({'status': 400, 'error':'Video cannot be empty'}), 400
     if not request.json or 'location' not in request.json or 'Images' not in request.json  or 'Videos' not in request.json or 'comment' not in request.json or 'createdBy' not in request.json:
-        return jsonify({'error': 'BAD_REQUEST'}), 400
-    if not (isinstance(comment, str) or isinstance(type_of_incident, str) or isinstance(location, str)):
-        return jsonify({'status': 400, 'error':'Please use character strings'}), 400
-    if re.search(r"\s", location) or re.search(r"\s", type_of_incident):
-        return jsonify({'status': 400, 'error':'No whitespaces allowed'}), 400
-    if type_of_incident.lower() not in TYPEOFRECORD:
-        return jsonify({'status': 400, 'error':'Input red-flag or intervention'}), 400
-    if not location or not comment:
-        return jsonify({'status': 400, 'error':'Field should atleast contain a character'}), 400
-    if not isinstance(created_by, int):
-        return jsonify({'status': 400, 'error':'Please use integer values'}), 400
-    incident = {"id": incident_id, "createdOn": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "createdBy": created_by, "type": type_of_incident, "status": "draft", "Images": images, "Videos": videos, "comment": comment, "location": location}
-    INCIDENT.append(incident)
-    return jsonify({'status': 201, "data":[{"id":incident['id'], "message": "Created red-flag record"}]}), 201
+        reply = jsonify({'error': 'BAD_REQUEST'}), 400
+    elif not (isinstance(comment, str) or isinstance(type_of_incident, str) or isinstance(location, str)):
+        reply = jsonify({'status': 400, 'error':'Please use character strings'}), 400
+    elif re.search(r"\s", location) or re.search(r"\s", type_of_incident):
+        reply = jsonify({'status': 400, 'error':'No whitespaces allowed'}), 400
+    elif type_of_incident.lower() not in TYPEOFRECORD:
+        reply = jsonify({'status': 400, 'error':'Input red-flag or intervention'}), 400
+    elif not location or not comment:
+        reply = jsonify({'status': 400, 'error':'Field should atleast contain a character'}), 400
+    elif not isinstance(created_by, int):
+        reply = jsonify({'status': 400, 'error':'Please use integer values'}), 400
+    else:
+        incident = {"id": incident_id, "createdOn": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "createBy": created_by, "type": type_of_incident, "status": "draft", "Images": images, "Videos": videos, "comment": comment, "location": location}
+        INCIDENT.append(incident)
+        reply = jsonify({'status': 201, "data":[{"id":incident['id'], "message": "Created red-flag record"}]}), 201
+    return reply
 
 @APP.route('/api/v1/red-flags', methods=['GET'])
 def get_red_flags():
