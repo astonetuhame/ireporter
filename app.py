@@ -122,4 +122,4 @@ def update_red_flag_comment(_id):
     return jsonify({"data":[{"id": incident[0]['id'], "message": "Updated red-flag record’s comment"}], 'status': 200}), 200
 
 if __name__ == "__main__":
-    APP.run()
+    APP.run(host='0.0.0.0', port=5000)
